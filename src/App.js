@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Input from "./components/Input";
+import DoList from "./components/DoList";
+import uuid from "uuid";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+	constructor() {
+		super();
+		this.state = {
+			tasks: []
+		};
+	}
+	addItem = parametreJayMenAppel => {
+		let newState = this.state.tasks;
+		newState.push({
+			id: uuid(),
+			desc: parametreJayMenAppel,
+			isDone: false
+		});
+		this.setState({
+			tasks: newState
+		});
+	};
+	removeItem = id => {
+		const filtered = this.state.tasks.filter(el => el.id !== id);
+		this.setState({
+			tasks: filtered
+		});
+	};
+	render() {
+		return (
+			<div className='App'>
+				<Input addItem={this.addItem} />
+				<DoList
+					moh={this.state.tasks}
+					removeItem={this.removeItem}
+					comItem={this.comItem}
+				/>
+			</div>
+		);
+	}
 }
-
 export default App;
