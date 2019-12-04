@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { addtodo } from "../js/actions/addtodo";
 
-export default class Input extends Component {
+class Input extends Component {
 	constructor(props) {
 		super(props);
 
@@ -14,9 +16,13 @@ export default class Input extends Component {
 		});
 	};
 
-	// twof = () => {
-	// 	this.props.addItem(this.state.todo);
-	// };
+	actionY = () => {
+		this.props.actionX(this.state.todo, false, 0);
+		this.setState({
+			todo: ""
+		});
+	};
+
 	render() {
 		return (
 			<div className='task-box'>
@@ -26,16 +32,24 @@ export default class Input extends Component {
 					type='text'
 					id='to-do'
 					placeholder='Enter new task'
-					// value={this.state.todo}
 					onChange={this.handleDoChange}
+					value={this.state.todo}
+					// onChange={this.actionY}
 				/>
 				<br />
 				<button
 					className='add-btn'
-					onClick={() => this.props.addItem(this.state.todo)}>
+					// onClick={() => this.props.addItem(this.state.todo)}>
+					onClick={this.actionY}>
 					Add
 				</button>
 			</div>
 		);
 	}
 }
+
+const mapActionsToProps = {
+	actionX: addtodo
+};
+
+export default connect(null, mapActionsToProps)(Input);

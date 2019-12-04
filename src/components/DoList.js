@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import DoItem from "./DoItem";
+import { connect } from "react-redux";
 
-export default class DoList extends Component {
+class DoList extends Component {
 	render() {
 		return (
 			<div id='items'>
 				<p id='title-items'>Let's get some work done!</p>
 				<ul id='tasks'>
-					{this.props.moh.map(el => (
+					{this.props.tasks.map((el, i) => (
 						<DoItem
-							item={el.desc}
-							key={el.id}
-							isDone={el.isDone}
-							removeItem={() => this.props.removeItem(el.id)}
+							key={i}
+							el={el}
+							// id={i}
+							// item={el.desc}
+							// isDone={el.isDone}
+							// removeItem={() => this.props.removeItem(el.id)							}
 						/>
 					))}
 				</ul>
@@ -20,3 +23,7 @@ export default class DoList extends Component {
 		);
 	}
 }
+const mapStateToProps = state => ({
+	tasks: state.tasks
+});
+export default connect(mapStateToProps)(DoList);
